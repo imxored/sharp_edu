@@ -343,7 +343,7 @@ namespace HelloApp
             MathOp(10, 5, Operation.Add);
             // Тип операции задаем с помощью константы Operation.Multiply, которая равна 3
             MathOp(11, 5, Operation.Multiply);
-            }
+            
             //кортежи
             var (name, age) = ("Tom", 23);
             Console.WriteLine(name);    // Tom
@@ -359,6 +359,55 @@ namespace HelloApp
             var (names, ages) = GetTuple(("Tom", 23), 12);
             Console.WriteLine(name);    // Tom
             Console.WriteLine(age);     // 35
+            TwoClass ntc = new TwoClass();
+            ntc.start();
+
+            //структуры
+            User tom = new User("Tom", 34);
+            tom.DisplayInfo();
+
+            User bob = new User();
+            bob.DisplayInfo();
+            }
+
+            State state1 = new State();
+
+            // присвоить значение переменной a у нас не получится,
+            // так как она закрытая и класс Program ее не видит
+            // И данную строку среда подчеркнет как неправильную
+
+            state1.a = 4; //Ошибка, получить доступ нельзя
+
+            // то же самое относится и к переменной b
+            state1.b = 3; // Ошибка, получить доступ нельзя
+
+            // присвоить значение переменной с то же не получится,
+            // так как класс Program не является классом-наследником класса State
+            state1.c = 1; // Ошибка, получить доступ нельзя
+
+            // переменная d с модификатором internal доступна из любого места программы
+            // поэтому спокойно присваиваем ей значение
+            state1.d = 5;
+
+            // переменная e так же доступна из любого места программы
+            state1.e = 8;
+
+            // переменная f общедоступна
+            state1.f = 8;
+
+            // Попробуем вывести значения переменных
+
+            // Так как этот метод объявлен как private, мы можем использовать его только внутри класса State
+            state1.Display_f();  // Ошибка, получить доступ нельзя
+
+            // Так как этот метод объявлен как protected, а класс Program не является наследником класса State
+            state1.Display_e();  // Ошибка, получить доступ нельзя
+
+            // Общедоступный метод
+            state1.Display_a();
+
+            // Метод доступен из любого места программы
+            state1.Display_b();
 
         }
         static void Saymsg(string msg)
@@ -446,8 +495,99 @@ namespace HelloApp
 
     }
     class TwoClass
-    {
+    {   
+        public void start() { 
+        Person tom = new Person();          // вызов 1-ого конструктора без параметров
+        Person bob = new Person("Bob");     //вызов 2-ого конструктора с одним параметром
+        Person sam = new Person("Sam", 25); // вызов 3-его конструктора с двумя параметрами
+
+        Persona valera = new Persona("Валера", 17);
+        valera.GetInfo();
+        }
 
     }
+    /*
+    class Person
+    {
+        public string name;
+        public int age;
 
+        public Person() { name = "Неизвестно"; age = 18; }      // 1 конструктор
+
+        public Person(string n) { name = n; age = 18; }         // 2 конструктор
+
+        public Person(string n, int a) { name = n; age = a; }   // 3 конструктор
+
+        public void GetInfo()
+        {
+            Console.WriteLine($"Имя: {name}  Возраст: {age}");
+        }
+    }
+    class Persona
+    {
+        public string name;
+        public int age;
+        //this
+        public Persona() : this("Неизвестно")
+        {
+        }
+        public Persona(string name) : this(name, 18)
+        {
+        }
+        public Persona(string name, int age)
+        {
+            //this. - обращение к переменным класса, а не параметрам конструктора
+            this.name = name;
+            this.age = age;
+        }
+        public void GetInfo()
+        {
+            Console.WriteLine($"Имя: {name}  Возраст: {age}");
+        }
+    }
+    struct User
+    {
+        public string name;
+        public int age;
+        public User(string name, int age)
+        {
+            this.name = name;
+            this.age = age;
+        }
+        public void DisplayInfo()
+        {
+            Console.WriteLine($"Name: {name}  Age: {age}");
+        }
+    }
+    public class State
+    {
+        int a; // все равно, что private int a;
+        private int b; // поле доступно только из текущего класса
+        protected int c; // доступно из текущего класса и производных классов
+        internal int d; // доступно в любом месте программы
+        protected internal int e; // доступно в любом месте программы и из классов-наследников
+        public int f; // доступно в любом месте программы, а также для других программ и сборок
+        protected private int g; // доступно из текущего класса и производных классов, которые определены в том же проекте
+
+        private void Display_f()
+        {
+            Console.WriteLine($"Переменная f = {f}");
+        }
+
+        public void Display_a()
+        {
+            Console.WriteLine($"Переменная a = {a}");
+        }
+
+        internal void Display_b()
+        {
+            Console.WriteLine($"Переменная b = {b}");
+        }
+
+        protected void Display_e()
+        {
+            Console.WriteLine($"Переменная e = {e}");
+        }
+    }
+    */
 }
