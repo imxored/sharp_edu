@@ -312,282 +312,35 @@ namespace HelloApp
             }
         static void main2()
         {
-            if (false) { 
-            Console.Write("Введиме первое слагаемое:");
-            int mX = Int32.Parse(Console.ReadLine());
-            
-            Console.Write("Введиме второе слагаемое:");
-            int mY = Int32.Parse(Console.ReadLine());
-            
-            int result = Sum(mX, mY);
-            Console.WriteLine($"Результат: {result}");
-
-            int x = 10;
-            GetData(x, 15, out int area, out int perimetr);
-            Console.WriteLine("Площадь : " + area);
-            Console.WriteLine("Периметр : " + perimetr);
-
-            Addition(1, 2, 3, 4, 5);
-
-            int[] array = new int[] { 1, 2, 3, 4 };
-            Addition(array);
-             //если у метода вставлен params можно не передавать параметр
-             //addition();
-             Fibonachi(7);
-
-             Operation op;
-             op = Operation.Add;
-             Console.WriteLine((int)op); // add
-            //перечисления enum
-            // Тип операции задаем с помощью константы Operation.Add, которая равна 1
-            MathOp(10, 5, Operation.Add);
-            // Тип операции задаем с помощью константы Operation.Multiply, которая равна 3
-            MathOp(11, 5, Operation.Multiply);
-            
-            //кортежи
-            var (name, age) = ("Tom", 23);
-            Console.WriteLine(name);    // Tom
-            Console.WriteLine(age);     // 23
-            var tuple = (count: 5, sum: 10);
-            Console.WriteLine(tuple.count); // 5
-            Console.WriteLine(tuple.sum); // 10     
-
-            var tuple2 = GetNamedValues(new int[] { 1, 2, 3, 4, 5, 6, 7 });
-            Console.WriteLine(tuple2.count);
-            Console.WriteLine(tuple2.sum);
-
-            var (names, ages) = GetTuple(("Tom", 23), 12);
-            Console.WriteLine(name);    // Tom
-            Console.WriteLine(age);     // 35
-            TwoClass ntc = new TwoClass();
-            ntc.start();
-
-            //структуры
-            User tom = new User("Tom", 34);
-            tom.DisplayInfo();
-
-            User bob = new User();
-            bob.DisplayInfo();
-            }
-
-            State state1 = new State();
-
-            // присвоить значение переменной a у нас не получится,
-            // так как она закрытая и класс Program ее не видит
-            // И данную строку среда подчеркнет как неправильную
-
-            state1.a = 4; //Ошибка, получить доступ нельзя
-
-            // то же самое относится и к переменной b
-            state1.b = 3; // Ошибка, получить доступ нельзя
-
-            // присвоить значение переменной с то же не получится,
-            // так как класс Program не является классом-наследником класса State
-            state1.c = 1; // Ошибка, получить доступ нельзя
-
-            // переменная d с модификатором internal доступна из любого места программы
-            // поэтому спокойно присваиваем ей значение
-            state1.d = 5;
-
-            // переменная e так же доступна из любого места программы
-            state1.e = 8;
-
-            // переменная f общедоступна
-            state1.f = 8;
-
-            // Попробуем вывести значения переменных
-
-            // Так как этот метод объявлен как private, мы можем использовать его только внутри класса State
-            state1.Display_f();  // Ошибка, получить доступ нельзя
-
-            // Так как этот метод объявлен как protected, а класс Program не является наследником класса State
-            state1.Display_e();  // Ошибка, получить доступ нельзя
-
-            // Общедоступный метод
-            state1.Display_a();
-
-            // Метод доступен из любого места программы
-            state1.Display_b();
+           
 
         }
-        static void Saymsg(string msg)
-        {
-            Console.WriteLine(msg);
-        }
-        static int GetSum()
-        {
-            int x = 2;
-            int y = 3;
-            return x + y;
-        }
-        static int Sum(int x, int y)
-        {
-            return x + y;
-        }
-        //параметры возвращаемые out
-        static void GetData(int x, int y, out int area, out int perim)
-        {
-        area = x * y;
-        perim = (x + y) * 2;
-        }
-        static void Addition(params int[] integers)
-        {
-            int result = 0;
-            for (int i = 0; i < integers.Length; i++)
-            {
-                result += integers[i];
-            }
-            Console.WriteLine(result);
-        }
-        //рекурсивный метод
-        static int Fibonachi(int n)
-        {
-            if (n == 0)
-            {
-                return 0;
-            }
-            if (n == 1)
-            {
-                return 1;
-            }
-            else
-            {
-                return Fibonachi(n - 1) + Fibonachi(n - 2);
-            }
-        }
-        static void MathOp(double x, double y, Operation op)
-        {
-            double result = 0.0;
-
-            switch (op)
-            {
-                case Operation.Add:
-                    result = x + y;
-                    break;
-                case Operation.Subtract:
-                    result = x - y;
-                    break;
-                case Operation.Multiply:
-                    result = x * y;
-                    break;
-                case Operation.Divide:
-                    result = x / y;
-                    break;
-            }
-
-            Console.WriteLine("Результат операции равен {0}", result);
-        }
-        private static (int sum, int count) GetNamedValues(int[] numbers)
-        {
-            var result = (sum: 0, count: 0);
-            for (int i = 0; i < numbers.Length; i++)
-            {
-                result.sum += numbers[i];
-                result.count++;
-            }
-            return result;
-        }
-        private static (string names, int ages) GetTuple((string n, int a) tuple, int x)
-        {
-            var result = (name: tuple.n, age: tuple.a + x);
-            return result;
-        }
-
     }
-    class TwoClass
-    {   
-        public void start() { 
-        Person tom = new Person();          // вызов 1-ого конструктора без параметров
-        Person bob = new Person("Bob");     //вызов 2-ого конструктора с одним параметром
-        Person sam = new Person("Sam", 25); // вызов 3-его конструктора с двумя параметрами
-
-        Persona valera = new Persona("Валера", 17);
-        valera.GetInfo();
-        }
-
-    }
-    /*
     class Person
     {
-        public string name;
-        public int age;
+        public string Name { get; set; }
+        public int Age { get; set; }
 
-        public Person() { name = "Неизвестно"; age = 18; }      // 1 конструктор
-
-        public Person(string n) { name = n; age = 18; }         // 2 конструктор
-
-        public Person(string n, int a) { name = n; age = a; }   // 3 конструктор
-
-        public void GetInfo()
+        public Person(string name, int age)
         {
-            Console.WriteLine($"Имя: {name}  Возраст: {age}");
+            Name = name;
+            Age = age;
         }
     }
-    class Persona
+    class Account
     {
-        public string name;
-        public int age;
-        //this
-        public Persona() : this("Неизвестно")
+        private int sum;
+        public int Sum
         {
-        }
-        public Persona(string name) : this(name, 18)
-        {
-        }
-        public Persona(string name, int age)
-        {
-            //this. - обращение к переменным класса, а не параметрам конструктора
-            this.name = name;
-            this.age = age;
-        }
-        public void GetInfo()
-        {
-            Console.WriteLine($"Имя: {name}  Возраст: {age}");
+            get { return sum; }
+            set
+            {
+                if (value > 0)
+                {
+                    sum = value;
+                }
+            }
         }
     }
-    struct User
-    {
-        public string name;
-        public int age;
-        public User(string name, int age)
-        {
-            this.name = name;
-            this.age = age;
-        }
-        public void DisplayInfo()
-        {
-            Console.WriteLine($"Name: {name}  Age: {age}");
-        }
-    }
-    public class State
-    {
-        int a; // все равно, что private int a;
-        private int b; // поле доступно только из текущего класса
-        protected int c; // доступно из текущего класса и производных классов
-        internal int d; // доступно в любом месте программы
-        protected internal int e; // доступно в любом месте программы и из классов-наследников
-        public int f; // доступно в любом месте программы, а также для других программ и сборок
-        protected private int g; // доступно из текущего класса и производных классов, которые определены в том же проекте
 
-        private void Display_f()
-        {
-            Console.WriteLine($"Переменная f = {f}");
-        }
-
-        public void Display_a()
-        {
-            Console.WriteLine($"Переменная a = {a}");
-        }
-
-        internal void Display_b()
-        {
-            Console.WriteLine($"Переменная b = {b}");
-        }
-
-        protected void Display_e()
-        {
-            Console.WriteLine($"Переменная e = {e}");
-        }
-    }
-    */
 }
